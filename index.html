@@ -10,3 +10,200 @@
     
 </body>
 </html>
+
+<!DOCTYPE html>
+<html lang="en" x-data="advisorApp()">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Freelancer AI Advisor</title>
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Poppins:wght@700&family=Roboto:wght@400&display=swap"
+        rel="stylesheet" />
+    <!-- Alpine.js -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <style>
+    
+    </style>
+    <script>
+        // function advisorApp() {
+        //     return {
+        //         jobListing: '',
+        //         tasks: [],
+        //         tools: [],
+        //         manualHours: 0,
+        //         aiHours: 0,
+        //         marketRate: 50,
+        //         toolCosts: 0,
+        //         profitMargin: 20,
+        //         projectCost: 0,
+        //         hourlyRate: 0,
+
+        //         analyze() {
+        //             // TODO: Integrate AI parsing here
+        //             // Placeholder logic:
+        //             this.tasks = ['Task 1 example', 'Task 2 example', 'Task 3 example'];
+        //             this.tools = [
+        //                 { name: 'ChatGPT', benefit: 'Quickly draft and refine text', link: 'https://chat.openai.com' },
+        //                 { name: 'Grammarly', benefit: 'Grammar and style checking', link: 'https://grammarly.com' }
+        //             ];
+        //             this.manualHours = 12;
+        //             this.aiHours = 5;
+        //             this.calculateRates();
+        //             this.scrollTo('tasks');
+        //         },
+
+        //         calculateRates() {
+        //             this.hourlyRate = ((this.marketRate + this.toolCosts / this.aiHours) * (1 + this.profitMargin / 100)).toFixed(2);
+        //             this.projectCost = (this.aiHours * this.hourlyRate).toFixed(2);
+        //         },
+
+        //         scrollTo(sectionId) {
+        //             document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+        //         },
+
+        //         copyAll() {
+        //             const content = document.getElementById('all-output').innerText;
+        //             navigator.clipboard.writeText(content);
+        //             alert('Copied to clipboard!');
+        //         },
+
+        //         savePDF() {
+        //             window.print();
+        //         }
+        //     };
+        // }
+    </script>
+</head>
+
+<body>
+    <!-- Hero/Header -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <h1>Freelancer AI Advisor</h1>
+            <p>Turn any job posting into a winning, AI-powered proposal</p>
+            <button class="btn" @click="scrollTo('input')">Get Started</button>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- Section 1: Job Listing Input -->
+        <section id="input">
+            <h2>1. Paste the Job Listing</h2>
+            <label for="jobListing">Job Listing</label>
+            <textarea id="jobListing" x-model="jobListing" rows="6"
+                placeholder="Paste the job description here..."></textarea>
+            <button class="btn" @click="analyze">Analyze</button>
+        </section>
+
+        <!-- Section 2: Analyzed Tasks -->
+        <section id="tasks" x-show="tasks.length">
+            <h2>2. Analyzed Tasks</h2>
+            <template x-for="task in tasks" :key="task">
+                <div class="card" x-text="task"></div>
+            </template>
+        </section>
+
+        <!-- Section 3: Suggested AI Tools -->
+        <section id="tools" x-show="tools.length">
+            <h2>3. Suggested AI Tools</h2>
+            <template x-for="tool in tools" :key="tool.name">
+                <div class="card">
+                    <h3 x-text="tool.name"></h3>
+                    <p x-text="tool.benefit"></p>
+                    <a :href="tool.link" target="_blank">Learn more</a>
+                </div>
+            </template>
+        </section>
+
+        <!-- Section 4: Time Estimates -->
+        <section id="estimates" x-show="manualHours">
+            <h2>4. Time Estimates</h2>
+            <div class="two-col">
+                <div class="card">
+                    <h3>Manual Completion</h3>
+                    <p x-text="manualHours + ' hours'"></p>
+                </div>
+                <div class="card">
+                    <h3>AI-Assisted Completion</h3>
+                    <p x-text="aiHours + ' hours'"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Rate Calculation -->
+        <section id="rates" x-show="projectCost">
+            <h2>5. Calculate Hourly Rate</h2>
+            <label>Market Rate ($/hr)</label>
+            <input type="number" x-model.number="marketRate" @input="calculateRates" />
+
+            <label>Monthly Tool Costs ($)</label>
+            <input type="number" x-model.number="toolCosts" @input="calculateRates" />
+
+            <label>Profit Margin (%)</label>
+            <input type="number" x-model.number="profitMargin" @input="calculateRates" />
+
+            <div class="card">
+                <p>Your hourly rate: <strong>$<span x-text="hourlyRate"></span>/hr</strong></p>
+                <p>Project cost: <strong>$<span x-text="projectCost"></span></strong></p>
+            </div>
+        </section>
+
+        <!-- Section 6: Proposal Draft -->
+        <section id="proposal" x-show="projectCost">
+            <h2>6. Draft Proposal</h2>
+            <textarea id="proposalText" rows="10" x-text="`
+Dear [Client Name],
+
+I am excited to submit my proposal. Based on your job listing, I have identified the key tasks and selected advanced AI tools to enhance efficiency and quality:
+
+- ${tasks.join('\n- ')}
+
+By leveraging these tools, I can complete the work in ${aiHours} hours (vs. ${manualHours} hours manually).
+
+To cover costs and ensure a profit margin, my rate is $${hourlyRate}/hr, resulting in a total project cost of $${projectCost}.
+
+Thank you for considering my proposal. I look forward to the opportunity to work with you.
+
+Best regards,
+[Your Name]
+      `"></textarea>
+            <button class="btn" @click="copyAll">Copy All</button>
+            <button class="btn" @click="savePDF">Save as PDF</button>
+        </section>
+
+        <!-- Hidden full output for copyAll -->
+        <pre id="all-output" style="display:none;">
+Hero: Freelancer AI Advisor
+Job Listing:
+${ jobListing }
+
+Tasks:
+${ tasks.join('\n') }
+
+Tools:
+${ tools.map(t => `- ${t.name}: ${t.benefit} (${t.link})`).join('\n') }
+
+Time Estimates:
+- Manual: ${manualHours}h
+- AI: ${aiHours}h
+
+Hourly Rate: $${hourlyRate}/hr
+Project Cost: $${projectCost}
+
+Proposal:
+${document.getElementById('proposalText')?.value}
+    </pre>
+    </div>
+
+    <!-- Footer -->
+    <footer class="container" style="text-align:center; margin-bottom:2rem;">
+        <hr />
+        <p><a href="#">About</a> · <a href="#">Privacy</a> · <a href="#">GitHub Repo</a></p>
+        <p>Built with <a href="https://alpinejs.dev/" target="_blank">Alpine.js</a></p>
+    </footer>
+</body>
+
+</html>

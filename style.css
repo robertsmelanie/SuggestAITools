@@ -1,0 +1,111 @@
+    /* Reset & Global Styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Roboto', sans-serif;
+        line-height: 1.6;
+        background: #F4F4F9;
+        color: #1B263B;
+    }
+
+    h1,
+    h2,
+    h3 {
+        font-family: 'Poppins', sans-serif;
+        color: #1B263B;
+    }
+
+    a {
+        color: #4DA8DA;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 800px;
+        margin: auto;
+        padding: 2rem 0;
+    }
+
+    .btn {
+        background: #4DA8DA;
+        color: #fff;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        cursor: pointer;
+        border-radius: 0.5rem;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .btn:hover {
+        opacity: 0.9;
+    }
+
+    section {
+        margin-bottom: 4rem;
+    }
+
+    .card {
+        background: #fff;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 1rem;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+    }
+
+    textarea,
+    input[type="text"],
+    input[type="number"] {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ccc;
+        border-radius: 0.5rem;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .fixed-top {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        z-index: 100;
+    }
+
+    .hero {
+        background: #1B263B;
+        color: #fff;
+        padding: 4rem 0;
+        text-align: center;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+    }
