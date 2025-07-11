@@ -1,5 +1,11 @@
 [build]
-  publish = "."     # or "public/" if you have a build step
+  publish = "."
+  command = ""        # or your build command, if applicable
 
 [functions]
-  directory = "api"  # ← this tells Netlify where to find your functions
+  directory = "api"
+
+[[redirects]]
+  from = "/api/*"
+  to   = "/.netlify/functions/:splat"
+  status = 200
