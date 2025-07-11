@@ -1,2 +1,5 @@
 [build]
-functions = "functions"
+  publish = "."     # or "public/" if you have a build step
+
+[functions]
+  directory = "api"  # ← this tells Netlify where to find your functions
